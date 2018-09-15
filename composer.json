@@ -1,0 +1,41 @@
+{
+    "name": "stayallive/tlsa",
+    "description": "Generate TLSA records in PHP.",
+    "keywords": [
+        "TLSA",
+        "dns"
+    ],
+    "homepage": "https://github.com/stayallive/tlsa-php",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alex Bouma",
+            "email": "me@alexbouma.me",
+            "homepage": "https://alexbouma.me",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "spatie/url": "^1.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Stayallive\\TLSA\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Stayallive\\TLSA\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
