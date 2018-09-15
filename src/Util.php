@@ -27,11 +27,11 @@ class Util
      */
     public static function getPublicKeyFromCertificate(string $pem): string
     {
-        $certificate      = @openssl_x509_read($pem);
-        $publicKey        = @openssl_get_publickey($certificate);
+        $certificate = @openssl_x509_read($pem);
+        $publicKey = @openssl_get_publickey($certificate);
         $publicKeyDetails = @openssl_pkey_get_details($publicKey);
 
-        if (!isset($publicKeyDetails['key'])) {
+        if (! isset($publicKeyDetails['key'])) {
             throw InvalidArgument::invalidCertificate();
         }
 

@@ -189,11 +189,11 @@ class BuilderTest extends TestCase
 
     private function get_certificate_stub(): string
     {
-        return file_get_contents(__DIR__ . '/stubs/alexbouma_me.crt');
+        return file_get_contents(__DIR__.'/stubs/alexbouma_me.crt');
     }
 
     private function get_public_key_stub(): string
     {
-        return file_get_contents(__DIR__ . '/stubs/alexbouma_me.pub');
+        return file_get_contents(__DIR__.'/stubs/alexbouma_me.pub');
     }
 }

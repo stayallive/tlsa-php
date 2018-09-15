@@ -3,20 +3,19 @@
 namespace Stayallive\TLSA;
 
 use Spatie\Url\Url;
-use Symfony\Component\Process\Process;
 use Stayallive\TLSA\Exceptions\InvalidArgument;
 
 class Builder
 {
-    public const CERTIFICATE_USAGE_CA                        = 0;
-    public const CERTIFICATE_USAGE_SERVICE_CERTIFICATE       = 1;
-    public const CERTIFICATE_USAGE_TRUST_ANCHOR_ASSERTION    = 2;
+    public const CERTIFICATE_USAGE_CA = 0;
+    public const CERTIFICATE_USAGE_SERVICE_CERTIFICATE = 1;
+    public const CERTIFICATE_USAGE_TRUST_ANCHOR_ASSERTION = 2;
     public const CERTIFICATE_USAGE_DOMAIN_ISSUED_CERTIFICATE = 3;
 
     public const SELECTOR_CERTIFICATE = 0;
-    public const SELECTOR_PUBLIC_KEY  = 1;
+    public const SELECTOR_PUBLIC_KEY = 1;
 
-    public const MATCHING_TYPE_FULL   = 0;
+    public const MATCHING_TYPE_FULL = 0;
     public const MATCHING_TYPE_SHA256 = 1;
     public const MATCHING_TYPE_SHA512 = 2;
 
@@ -84,13 +83,13 @@ class Builder
         $parsed = Url::fromString(strpos($url, 'http') === 0 ? $url : "https://{$url}");
 
         $this->protocol = $protocol;
-        $this->domain   = $parsed->getHost();
-        $this->port     = $parsed->getPort() ?? 443;
+        $this->domain = $parsed->getHost();
+        $this->port = $parsed->getPort() ?? 443;
 
         // Set some default values
         $this->certificate_usage = self::CERTIFICATE_USAGE_DOMAIN_ISSUED_CERTIFICATE;
-        $this->selector          = self::SELECTOR_PUBLIC_KEY;
-        $this->matching_type     = self::MATCHING_TYPE_SHA256;
+        $this->selector = self::SELECTOR_PUBLIC_KEY;
+        $this->matching_type = self::MATCHING_TYPE_SHA256;
     }
 
     public function certificateUsage(int $certificateUsage)
