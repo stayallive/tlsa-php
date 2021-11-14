@@ -2,8 +2,8 @@
 
 namespace Stayallive\TLSA\Test;
 
-use Stayallive\TLSA\Builder;
 use PHPUnit\Framework\TestCase;
+use Stayallive\TLSA\Builder;
 use Stayallive\TLSA\Exceptions\InvalidArgument;
 
 class BuilderTest extends TestCase

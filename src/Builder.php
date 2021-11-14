@@ -71,8 +71,8 @@ class Builder
     /**
      * TLSA constructor.
      *
-     * @param string $url
-     * @param string $protocol
+     * @param  string  $url
+     * @param  string  $protocol
      */
     public function __construct(string $url, string $protocol = 'tcp')
     {
