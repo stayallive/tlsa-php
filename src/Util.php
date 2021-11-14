@@ -9,8 +9,7 @@ class Util
     /**
      * Convert an PEM encoded certificate to DER encoding.
      *
-     * @param string $pem
-     *
+     * @param  string  $pem
      * @return string
      */
     public static function convertPemToDer(string $pem): string
@@ -21,8 +20,7 @@ class Util
     /**
      * Get the public key from a certificate.
      *
-     * @param string $pem
-     *
+     * @param  string  $pem
      * @return string
      */
     public static function getPublicKeyFromCertificate(string $pem): string
@@ -41,8 +39,7 @@ class Util
     /**
      * Strip the headers from an certificate or public key.
      *
-     * @param string $pem
-     *
+     * @param  string  $pem
      * @return string
      */
     public static function stripHeaders(string $pem): string
