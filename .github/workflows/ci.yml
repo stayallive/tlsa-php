@@ -55,5 +55,8 @@ jobs:
           extensions: openssl
           coverage: none
 
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-interaction
+
       - name: Validate code style
         run: composer phpcs:ci
