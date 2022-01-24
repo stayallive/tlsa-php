@@ -7,15 +7,15 @@ use Stayallive\TLSA\Exceptions\InvalidArgument;
 
 class Builder
 {
-    public const CERTIFICATE_USAGE_CA                        = 0;
-    public const CERTIFICATE_USAGE_SERVICE_CERTIFICATE       = 1;
-    public const CERTIFICATE_USAGE_TRUST_ANCHOR_ASSERTION    = 2;
+    public const CERTIFICATE_USAGE_CA = 0;
+    public const CERTIFICATE_USAGE_SERVICE_CERTIFICATE = 1;
+    public const CERTIFICATE_USAGE_TRUST_ANCHOR_ASSERTION = 2;
     public const CERTIFICATE_USAGE_DOMAIN_ISSUED_CERTIFICATE = 3;
 
     public const SELECTOR_CERTIFICATE = 0;
-    public const SELECTOR_PUBLIC_KEY  = 1;
+    public const SELECTOR_PUBLIC_KEY = 1;
 
-    public const MATCHING_TYPE_FULL   = 0;
+    public const MATCHING_TYPE_FULL = 0;
     public const MATCHING_TYPE_SHA256 = 1;
     public const MATCHING_TYPE_SHA512 = 2;
 
@@ -66,8 +66,8 @@ class Builder
         $parsed = Url::fromString(str_starts_with($url, 'http') ? $url : "https://{$url}");
 
         $this->protocol = $protocol;
-        $this->domain   = $parsed->getHost();
-        $this->port     = $parsed->getPort() ?? 443;
+        $this->domain = $parsed->getHost();
+        $this->port = $parsed->getPort() ?? 443;
     }
 
     public function certificateUsage(int $certificateUsage): static
