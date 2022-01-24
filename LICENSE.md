@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) Alex Bouma <me@alexbouma.me>
+Copyright (c) Alex Bouma <alex@bouma.me>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

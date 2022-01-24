@@ -1,4 +1,5 @@
 build
-composer.lock
-docs
 vendor
+composer.lock
+.php-cs-fixer.cache
+.phpunit.result.cache

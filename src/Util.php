@@ -8,9 +8,6 @@ class Util
 {
     /**
      * Convert an PEM encoded certificate to DER encoding.
-     *
-     * @param  string  $pem
-     * @return string
      */
     public static function convertPemToDer(string $pem): string
     {
@@ -19,17 +16,24 @@ class Util
 
     /**
      * Get the public key from a certificate.
-     *
-     * @param  string  $pem
-     * @return string
      */
     public static function getPublicKeyFromCertificate(string $pem): string
     {
         $certificate = @openssl_x509_read($pem);
+
+        if ($certificate === false) {
+            throw InvalidArgument::invalidCertificate();
+        }
+
         $publicKey = @openssl_get_publickey($certificate);
+
+        if ($publicKey === false) {
+            throw InvalidArgument::invalidCertificate();
+        }
+
         $publicKeyDetails = @openssl_pkey_get_details($publicKey);
 
-        if (! isset($publicKeyDetails['key'])) {
+        if (!isset($publicKeyDetails['key'])) {
             throw InvalidArgument::invalidCertificate();
         }
 
@@ -38,9 +42,6 @@ class Util
 
     /**
      * Strip the headers from an certificate or public key.
-     *
-     * @param  string  $pem
-     * @return string
      */
     public static function stripHeaders(string $pem): string
     {

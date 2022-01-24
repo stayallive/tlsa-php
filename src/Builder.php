@@ -7,72 +7,55 @@ use Stayallive\TLSA\Exceptions\InvalidArgument;
 
 class Builder
 {
-    public const CERTIFICATE_USAGE_CA = 0;
-    public const CERTIFICATE_USAGE_SERVICE_CERTIFICATE = 1;
-    public const CERTIFICATE_USAGE_TRUST_ANCHOR_ASSERTION = 2;
+    public const CERTIFICATE_USAGE_CA                        = 0;
+    public const CERTIFICATE_USAGE_SERVICE_CERTIFICATE       = 1;
+    public const CERTIFICATE_USAGE_TRUST_ANCHOR_ASSERTION    = 2;
     public const CERTIFICATE_USAGE_DOMAIN_ISSUED_CERTIFICATE = 3;
 
     public const SELECTOR_CERTIFICATE = 0;
-    public const SELECTOR_PUBLIC_KEY = 1;
+    public const SELECTOR_PUBLIC_KEY  = 1;
 
-    public const MATCHING_TYPE_FULL = 0;
+    public const MATCHING_TYPE_FULL   = 0;
     public const MATCHING_TYPE_SHA256 = 1;
     public const MATCHING_TYPE_SHA512 = 2;
 
     /**
      * The protocol we are generating an TLSA record for.
-     *
-     * @var string
      */
-    protected $protocol;
+    protected string $protocol;
 
     /**
      * The domain we are generating an TLSA record for.
-     *
-     * @var string
      */
-    protected $domain;
+    protected string $domain;
 
     /**
      * The port we are generating an TLSA record for.
-     *
-     * @var int
      */
-    protected $port;
+    protected int $port;
 
     /**
      * The certificate usage field.
-     *
-     * @var int
      */
-    protected $certificate_usage;
+    protected int $certificateUsage = self::CERTIFICATE_USAGE_DOMAIN_ISSUED_CERTIFICATE;
 
     /**
      * The selector field.
-     *
-     * @var int
      */
-    protected $selector;
+    protected int $selector = self::SELECTOR_PUBLIC_KEY;
 
     /**
      * The matching type field.
-     *
-     * @var int
      */
-    protected $matching_type;
+    protected int $matchingType = self::MATCHING_TYPE_SHA256;
 
     /**
      * The certificate association data.
-     *
-     * @var string
      */
-    protected $data;
+    protected ?string $data = null;
 
     /**
-     * TLSA constructor.
-     *
-     * @param  string  $url
-     * @param  string  $protocol
+     * TLSA builder constructor.
      */
     public function __construct(string $url, string $protocol = 'tcp')
     {
@@ -80,40 +63,35 @@ class Builder
             throw InvalidArgument::domainIsMissing();
         }
 
-        $parsed = Url::fromString(strpos($url, 'http') === 0 ? $url : "https://{$url}");
+        $parsed = Url::fromString(str_starts_with($url, 'http') ? $url : "https://{$url}");
 
         $this->protocol = $protocol;
-        $this->domain = $parsed->getHost();
-        $this->port = $parsed->getPort() ?? 443;
-
-        // Set some default values
-        $this->certificate_usage = self::CERTIFICATE_USAGE_DOMAIN_ISSUED_CERTIFICATE;
-        $this->selector = self::SELECTOR_PUBLIC_KEY;
-        $this->matching_type = self::MATCHING_TYPE_SHA256;
+        $this->domain   = $parsed->getHost();
+        $this->port     = $parsed->getPort() ?? 443;
     }
 
-    public function certificateUsage(int $certificateUsage)
+    public function certificateUsage(int $certificateUsage): static
     {
-        $this->certificate_usage = $certificateUsage;
+        $this->certificateUsage = $certificateUsage;
 
         return $this;
     }
 
-    public function selector(int $selector)
+    public function selector(int $selector): static
     {
         $this->selector = $selector;
 
         return $this;
     }
 
-    public function matchingType(int $matchingType)
+    public function matchingType(int $matchingType): static
     {
-        $this->matching_type = $matchingType;
+        $this->matchingType = $matchingType;
 
         return $this;
     }
 
-    public function forCertificate(string $certificate)
+    public function forCertificate(string $certificate): static
     {
         if ($this->selector === self::SELECTOR_PUBLIC_KEY) {
             return $this->forPublicKey(Util::getPublicKeyFromCertificate($certificate));
@@ -124,7 +102,7 @@ class Builder
         return $this;
     }
 
-    public function forPublicKey(string $publicKey)
+    public function forPublicKey(string $publicKey): static
     {
         if ($this->selector === self::SELECTOR_CERTIFICATE) {
             throw InvalidArgument::invalidSelectorForPublicKey();
@@ -152,26 +130,22 @@ class Builder
 
     public function getRecordContents(): string
     {
-        if (empty($this->data)) {
+        if ($this->data === null) {
             throw InvalidArgument::missingData();
         }
 
-        return "{$this->certificate_usage} {$this->selector} {$this->matching_type} {$this->convertCertificateDataForRecord($this->data)}";
+        return "{$this->certificateUsage} {$this->selector} {$this->matchingType} {$this->convertCertificateDataForRecord($this->data)}";
     }
 
     private function convertCertificateDataForRecord(string $data): string
     {
         $data = Util::convertPemToDer($data);
 
-        switch ($this->matching_type) {
-            case self::MATCHING_TYPE_FULL:
-                return bin2hex($data);
-            case self::MATCHING_TYPE_SHA256:
-                return bin2hex(hash('sha256', $data, true));
-            case self::MATCHING_TYPE_SHA512:
-                return bin2hex(hash('sha512', $data, true));
-            default:
-                throw InvalidArgument::invalidMatchingType();
-        }
+        return match ($this->matchingType) {
+            self::MATCHING_TYPE_FULL   => bin2hex($data),
+            self::MATCHING_TYPE_SHA256 => bin2hex(hash('sha256', $data, true)),
+            self::MATCHING_TYPE_SHA512 => bin2hex(hash('sha512', $data, true)),
+            default                    => throw InvalidArgument::invalidMatchingType(),
+        };
     }
 }

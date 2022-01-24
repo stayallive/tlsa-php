@@ -1,9 +1,6 @@
 # TSLA RR builder for PHP
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/stayallive/tlsa.svg?style=flat-square)](https://packagist.org/packages/stayallive/tlsa)
-[![Build Status](https://img.shields.io/travis/stayallive/tlsa-php/master.svg?style=flat-square)](https://travis-ci.org/stayallive/tlsa-php)
-[![StyleCI](https://styleci.io/repos/148890664/shield?branch=master)](https://styleci.io/repos/148890664)
-[![Quality Score](https://img.shields.io/scrutinizer/g/stayallive/tlsa-php.svg?style=flat-square)](https://scrutinizer-ci.com/g/stayallive/tlsa-php)
 [![Total Downloads](https://img.shields.io/packagist/dt/stayallive/tlsa.svg?style=flat-square)](https://packagist.org/packages/stayallive/tlsa)
 
 This package contains a class that can generate TLSA resource records.

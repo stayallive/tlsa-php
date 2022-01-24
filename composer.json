@@ -10,18 +10,19 @@
     "authors": [
         {
             "name": "Alex Bouma",
-            "email": "me@alexbouma.me",
-            "homepage": "https://alexbouma.me",
+            "email": "alex@bouma.me",
+            "homepage": "https://alex.bouma.me",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": "^7.1",
-        "spatie/url": "^1.3"
+        "php": "^8.0",
+        "ext-openssl": "*",
+        "spatie/url": "^2.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.0",
-        "scrutinizer/ocular": "^1.5"
+        "friendsofphp/php-cs-fixer": "3.4.*",
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
@@ -34,7 +35,10 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit"
+        "test": "vendor/bin/phpunit --stop-on-failure",
+        "test:ci": "vendor/bin/phpunit",
+        "phpcs": "vendor/bin/php-cs-fixer fix",
+        "phpcs:ci": "vendor/bin/php-cs-fixer fix --dry-run --diff"
     },
     "config": {
         "sort-packages": true
