@@ -70,28 +70,28 @@ class Builder
         $this->port     = $parsed->getPort() ?? 443;
     }
 
-    public function certificateUsage(int $certificateUsage): static
+    public function certificateUsage(int $certificateUsage): self
     {
         $this->certificateUsage = $certificateUsage;
 
         return $this;
     }
 
-    public function selector(int $selector): static
+    public function selector(int $selector): self
     {
         $this->selector = $selector;
 
         return $this;
     }
 
-    public function matchingType(int $matchingType): static
+    public function matchingType(int $matchingType): self
     {
         $this->matchingType = $matchingType;
 
         return $this;
     }
 
-    public function forCertificate(string $certificate): static
+    public function forCertificate(string $certificate): self
     {
         if ($this->selector === self::SELECTOR_PUBLIC_KEY) {
             return $this->forPublicKey(Util::getPublicKeyFromCertificate($certificate));
@@ -102,7 +102,7 @@ class Builder
         return $this;
     }
 
-    public function forPublicKey(string $publicKey): static
+    public function forPublicKey(string $publicKey): self
     {
         if ($this->selector === self::SELECTOR_CERTIFICATE) {
             throw InvalidArgument::invalidSelectorForPublicKey();
