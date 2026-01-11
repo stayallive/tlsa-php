@@ -137,6 +137,11 @@ class Builder
         return "{$this->certificateUsage} {$this->selector} {$this->matchingType} {$this->convertCertificateDataForRecord($this->data)}";
     }
 
+    public function matchesRecordContents(string $recordContents): bool
+    {
+        return $this->getRecordContents() === strtolower($recordContents);
+    }
+
     private function convertCertificateDataForRecord(string $data): string
     {
         $data = Util::convertPemToDer($data);
